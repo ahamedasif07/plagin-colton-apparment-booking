@@ -321,6 +321,10 @@ select {
   background: transparent !important;
 }
 
+/* chack out id css */
+#apptCheckout {
+  color: white !important;
+}
 /* ══════════════════════════════════════════
    Single Apartment Page
 ══════════════════════════════════════════ */
@@ -433,7 +437,7 @@ select {
   margin-bottom: 20px;
 }
 .appt-room-main-title {
-  font-size: clamp(20px, 3vw, 26px);
+  font-size: clamp(30px, 3vw, 26px) !important;
   font-weight: 800;
   color: #fff;
   margin: 0 0 6px;
@@ -544,7 +548,7 @@ select {
 .appt-room-details-row h3,
 .appt-amenities-section h3,
 .appt-meet-host-section h3 {
-  font-size: 20px;
+  font-size: 30px !important;
   font-weight: 700;
   color: #fff;
   margin: 0 0 16px;
@@ -718,9 +722,10 @@ select {
 }
 
 .appt-bw-dates {
-  display: flex;
+  flex-direction: column;
+
   align-items: center;
-  gap: 8px;
+  gap: 0;
   background: #1e1e1e;
   border: 1px solid var(--appt-border);
   border-radius: 10px;
@@ -864,6 +869,7 @@ select {
   animation: apptSlideUp 0.25s ease;
   max-height: 90vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 @media (max-width: 480px) {
   .appt-popup-box {
@@ -907,7 +913,7 @@ select {
   margin-bottom: 20px;
 }
 .appt-popup-header h2 {
-  font-size: 22px;
+  font-size: 22px !important;
   font-weight: 800;
   color: #fff;
   margin: 0 0 6px;
