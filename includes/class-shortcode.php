@@ -9,10 +9,6 @@ class Appartali_Shortcode
         add_shortcode('explore_rooms', [$this, 'render']);
     }
 
-    /**
-     * Render the shortcode interface
-     * Usage: [explore_rooms limit="8" category=""]
-     */
     public function render($atts)
     {
         $atts = shortcode_atts([
@@ -23,16 +19,16 @@ class Appartali_Shortcode
 
         ob_start();
 
-        /**
-         * Define room count filter options
-         * Change the keys to match your metadata values if necessary
-         */
         $categories = [
             ''  => 'All Category',
             '1' => '1 Room',
+            '2' => '2 Rooms',
             '3' => '3 Rooms',
+            '4' => '4 Rooms',
             '5' => '5 Rooms',
+            '6' => '6 Rooms',
             '7' => '7 Rooms',
+            '8' => '8 Rooms',
         ];
 ?>
         <section class="appt-explore-section">
@@ -58,10 +54,6 @@ class Appartali_Shortcode
         return ob_get_clean();
     }
 
-    /**
-     * Fetch and render room cards based on limit and room count filter
-     * Also used for AJAX response processing
-     */
     public function render_cards($limit = 8, $category = '')
     {
         $query_args = [
@@ -72,14 +64,11 @@ class Appartali_Shortcode
             'order'          => 'DESC',
         ];
 
-        /**
-         * Filter by room count if a specific value is selected
-         * Note: Ensure '_total_rooms' matches your specific meta_key for room numbers
-         */
+        // FIX: use '_room_number' which is the actual saved meta key from class-cpt.php
         if ($category !== '') {
             $query_args['meta_query'] = [
                 [
-                    'key'     => '_total_rooms',
+                    'key'     => '_room_number',
                     'value'   => sanitize_text_field($category),
                     'compare' => '=',
                 ]
@@ -96,41 +85,62 @@ class Appartali_Shortcode
 
         while ($loop->have_posts()) : $loop->the_post();
             $id            = get_the_ID();
+            $title         = get_the_title();
             $thumb         = get_the_post_thumbnail_url($id, 'medium_large');
             $price         = get_post_meta($id, '_price_per_night', true);
             $location      = get_post_meta($id, '_location', true);
             $host_name     = get_post_meta($id, '_host_name', true);
             $room_id       = get_post_meta($id, '_room_id', true);
             $rating        = get_post_meta($id, '_rating', true);
+            $room_number   = get_post_meta($id, '_room_number', true);
+            $max_guests    = get_post_meta($id, '_max_guests', true);
             $permalink     = get_permalink($id);
+
+            // Display name: use title (apartment name)
+            $display_name  = $title ?: $location;
         ?>
             <a href="<?= esc_url($permalink) ?>" class="appt-room-card">
                 <div class="appt-room-img-wrap">
                     <?php if ($thumb) : ?>
-                        <img src="<?= esc_url($thumb) ?>" alt="<?= esc_attr(get_the_title()) ?>" class="appt-room-img" loading="lazy">
+                        <img src="<?= esc_url($thumb) ?>" alt="<?= esc_attr($title) ?>" class="appt-room-img" loading="lazy">
                     <?php else : ?>
                         <div class="appt-room-img appt-no-img">
                             <span>No Image Available</span>
                         </div>
                     <?php endif; ?>
                 </div>
+
                 <div class="appt-room-info">
-                    <div class="appt-room-left">
-                        <span class="appt-room-location"><?= esc_html($location ?: get_the_title()) ?></span>
-                        <?php if ($host_name) : ?>
-                            <span class="appt-room-host">Stay with <?= esc_html($host_name) ?></span>
+                    <!-- Top row: name + rating -->
+                    <div class="appt-room-top-row">
+                        <span class="appt-room-name"><?= esc_html($display_name) ?></span>
+                        <?php if ($rating) : ?>
+                            <span class="appt-room-rating"><span
+                                    class="appt-star">★</span><?= esc_html(number_format((float)$rating, 1)) ?></span>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Host -->
+                    <?php if ($host_name) : ?>
+                        <span class="appt-room-host">Stay with <?= esc_html($host_name) ?></span>
+                    <?php endif; ?>
+
+                    <!-- Features row: rooms, bathrooms, guests -->
+                    <div class="appt-room-features">
+                        <?php if ($room_number) : ?>
+                            <span class="appt-feat-item">🛏 <?= esc_html($room_number) ?> Room<?= $room_number > 1 ? 's' : '' ?></span>
+                        <?php endif; ?>
+                        <span class="appt-feat-item">🚿 1 Bath</span>
+                        <?php if ($max_guests) : ?>
+                            <span class="appt-feat-item">👥 <?= esc_html($max_guests) ?> Guests</span>
                         <?php endif; ?>
                         <?php if ($room_id) : ?>
-                            <span class="appt-room-id">ID: <?= esc_html($room_id) ?></span>
+                            <span class="appt-feat-item">🔑 ID: <?= esc_html($room_id) ?></span>
                         <?php endif; ?>
-                        <span class="appt-room-price">$<?= esc_html(number_format((float)$price, 2)) ?> / Night</span>
                     </div>
-                    <div class="appt-room-right">
-                        <?php if ($rating) : ?>
-                            <span class="appt-room-rating"><span class="appt-star">★</span><?= esc_html($rating) ?></span>
-                        <?php endif; ?>
 
-                    </div>
+                    <!-- Price -->
+                    <span class="appt-room-price"><strong>$<?= esc_html(number_format((float)$price, 2)) ?></strong> / Night</span>
                 </div>
             </a>
 <?php endwhile;
@@ -138,10 +148,7 @@ class Appartali_Shortcode
     }
 }
 
-/**
- * Handle AJAX request for filtering rooms by category (room count)
- */
-add_action('wp_ajax_appt_filter_rooms',         'appt_ajax_filter_rooms');
+add_action('wp_ajax_appt_filter_rooms',        'appt_ajax_filter_rooms');
 add_action('wp_ajax_nopriv_appt_filter_rooms', 'appt_ajax_filter_rooms');
 
 function appt_ajax_filter_rooms()
@@ -149,7 +156,7 @@ function appt_ajax_filter_rooms()
     check_ajax_referer('appt_nonce', 'nonce');
 
     $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
-    $limit    = isset($_POST['limit'])    ? intval($_POST['limit'])                 : 8;
+    $limit    = isset($_POST['limit'])    ? intval($_POST['limit'])                  : 8;
 
     ob_start();
     $sc = new Appartali_Shortcode();
