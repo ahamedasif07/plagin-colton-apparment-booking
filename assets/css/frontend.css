@@ -10,7 +10,7 @@
   --appt-border: #2a2a2a;
   --appt-text: #e8e8e8;
   --appt-muted: #999999;
-  --appt-gold: #f5c842;
+  --appt-gold: #c9a34e;
   --appt-gold-dim: #f5c84222;
   --appt-green: #22c55e;
   --appt-red: #ef4444;
@@ -22,7 +22,6 @@
 
 /* ── Explore Section ── */
 .appt-explore-section {
-  background: var(--appt-bg);
   padding: 60px 24px 48px;
   color: var(--appt-text);
 }
@@ -235,7 +234,7 @@
   padding: 9px 0;
   background: transparent;
   border: 1px solid var(--appt-gold);
-  color: var(--appt-gold);
+  color: var(--appt-gold) !important;
   border-radius: 7px;
   font-size: 13px;
   font-weight: 600;
@@ -245,7 +244,7 @@
 }
 .appt-readmore-btn:hover {
   background: var(--appt-gold);
-  color: #111;
+  color: white !important;
 }
 
 /* ── Browse More ── */
