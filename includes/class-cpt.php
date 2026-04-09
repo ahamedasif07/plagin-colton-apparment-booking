@@ -87,15 +87,10 @@ class Appartali_CPT
             $val = esc_attr(get_post_meta($post->ID, $key, true));
             echo "<tr><th>{$cfg[0]}</th><td><input type='{$cfg[1]}' name='" . ltrim($key, '_') . "' value='{$val}' {$cfg[2]} class='regular-text'></td></tr>";
         }
-        /* Room number */
-        /**
-         * Render Room Number selection in the admin meta box
-         */
+
+        /* Room Number */
         $rn = get_post_meta($post->ID, '_room_number', true);
-
         echo '<tr><th>Room Number</th><td><select name="room_number">';
-
-        // Define the range of rooms you want to display (e.g., 1 to 10)
         $room_options = [
             '1' => '1 Room',
             '2' => '2 Rooms',
@@ -104,14 +99,29 @@ class Appartali_CPT
             '5' => '5 Rooms',
             '6' => '6 Rooms',
             '7' => '7 Rooms',
-            '8' => '8 Rooms'
+            '8' => '8 Rooms',
         ];
-
         foreach ($room_options as $v => $l) {
             echo "<option value='$v'" . selected($rn, $v, false) . ">$l</option>";
         }
+        echo '</select></td></tr>';
 
-        echo '</select></td></tr></table>';
+        /* Bathroom Number — NEW FIELD */
+        $bn = get_post_meta($post->ID, '_bathroom_number', true);
+        echo '<tr><th>Bathroom Number</th><td><select name="bathroom_number">';
+        $bath_options = [
+            '1' => '1 Bathroom',
+            '2' => '2 Bathrooms',
+            '3' => '3 Bathrooms',
+            '4' => '4 Bathrooms',
+            '5' => '5 Bathrooms',
+        ];
+        foreach ($bath_options as $v => $l) {
+            echo "<option value='$v'" . selected($bn, $v, false) . ">$l</option>";
+        }
+        echo '</select></td></tr>';
+
+        echo '</table>';
     }
 
     /* ── Gallery Box ── */
@@ -290,6 +300,17 @@ class Appartali_CPT
                 update_post_meta($post_id, '_' . $f, sanitize_text_field($_POST[$f]));
             }
         }
+
+        // Room Number
+        if (isset($_POST['room_number'])) {
+            update_post_meta($post_id, '_room_number', sanitize_text_field($_POST['room_number']));
+        }
+
+        // Bathroom Number — NEW FIELD
+        if (isset($_POST['bathroom_number'])) {
+            update_post_meta($post_id, '_bathroom_number', sanitize_text_field($_POST['bathroom_number']));
+        }
+
         update_post_meta($post_id, '_host_superhost', isset($_POST['host_superhost']) ? '1' : '0');
         $amenities = isset($_POST['amenities']) ? array_map('sanitize_text_field', (array)$_POST['amenities']) : [];
         update_post_meta($post_id, '_amenities', $amenities);

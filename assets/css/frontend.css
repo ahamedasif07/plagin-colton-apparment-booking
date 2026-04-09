@@ -36,6 +36,10 @@
   letter-spacing: -0.5px;
 }
 
+#apptCheckin {
+  color: white !important;
+}
+
 /* ── Category Tabs ── */
 .appt-category-tabs {
   display: flex;
@@ -54,11 +58,14 @@
   font-size: 14px !important;
   font-weight: 500 !important;
   transition: var(--appt-transition) !important;
+  background: transparent !important;
+  color: var(--appt-muted) !important;
 }
 .appt-tab-btn:hover,
 .appt-tab-btn.active {
   background: #e6a211 !important;
   border-color: var(--appt-gold) !important;
+  color: #111 !important;
   font-weight: 700 !important;
 }
 
@@ -85,23 +92,30 @@
   }
 }
 
-/* ── Room Card ── */
-.appt-room-card {
-  display: block;
+/* ── Room Card Wrapper (includes Read More) ── */
+.appt-room-card-wrap {
+  display: flex;
+  flex-direction: column;
   background: var(--appt-card);
   border-radius: var(--appt-radius);
   overflow: hidden;
-  text-decoration: none;
-  color: var(--appt-text);
+  border: 1px solid var(--appt-border);
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease;
-  border: 1px solid var(--appt-border);
 }
-.appt-room-card:hover {
+.appt-room-card-wrap:hover {
   transform: translateY(-4px);
   box-shadow: var(--appt-shadow);
   border-color: #3a3a3a;
+}
+
+/* ── Room Card (anchor — no block display needed separately) ── */
+.appt-room-card {
+  display: block;
+  text-decoration: none;
+  color: var(--appt-text);
+  flex: 1;
 }
 
 .appt-room-img-wrap {
@@ -120,7 +134,7 @@
   transition: transform 0.4s ease !important;
   border-radius: 0 !important;
 }
-.appt-room-card:hover .appt-room-img {
+.appt-room-card-wrap:hover .appt-room-img {
   transform: scale(1.06);
 }
 .appt-no-img {
@@ -136,13 +150,13 @@
 
 /* ── Room Card Info ── */
 .appt-room-info {
-  padding: 14px 16px 16px;
+  padding: 14px 16px 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
-/* Top row: name + rating */
+/* Top row: title + rating */
 .appt-room-top-row {
   display: flex;
   justify-content: space-between;
@@ -174,13 +188,14 @@
   font-size: 13px;
 }
 
-/* Host */
-.appt-room-host {
+/* Location */
+.appt-room-location {
   font-size: 12px;
   color: var(--appt-muted);
+  display: block;
 }
 
-/* Features row */
+/* Features row: rooms + bathrooms */
 .appt-room-features {
   display: flex;
   flex-wrap: wrap;
@@ -207,6 +222,30 @@
 .appt-room-price strong {
   color: #fff;
   font-size: 16px;
+}
+
+/* ── Read More Button ── */
+.appt-card-readmore-wrap {
+  padding: 0 16px 16px;
+}
+.appt-readmore-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 9px 0;
+  background: transparent;
+  border: 1px solid var(--appt-gold);
+  color: var(--appt-gold);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--appt-transition);
+  box-sizing: border-box;
+}
+.appt-readmore-btn:hover {
+  background: var(--appt-gold);
+  color: #111;
 }
 
 /* ── Browse More ── */
@@ -239,9 +278,48 @@
   font-size: 15px;
 }
 
-.appt-rooms-grid.loading .appt-room-card {
+.appt-rooms-grid.loading .appt-room-card-wrap {
   pointer-events: none;
   opacity: 0.5;
+}
+
+/* ══════════════════════════════════════════
+   GLOBAL INPUT TEXT COLOR FIX
+   All inputs inside appt sections = black text
+══════════════════════════════════════════ */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="search"],
+input[type="password"],
+textarea,
+select {
+  color: #111111 !important;
+}
+
+.appt-explore-section input,
+.appt-explore-section textarea,
+.appt-explore-section select,
+.appt-single-page input[type="text"],
+.appt-single-page input[type="email"],
+.appt-single-page input[type="tel"],
+.appt-single-page input[type="number"],
+.appt-single-page textarea,
+.appt-single-page select,
+.appt-popup-overlay input[type="text"],
+.appt-popup-overlay input[type="email"],
+.appt-popup-overlay input[type="tel"],
+.appt-popup-overlay textarea {
+  color: #111111 !important;
+  background: #ffffff !important;
+}
+
+/* Date inputs stay dark-themed on widget */
+.appt-date-input {
+  color: #ffffff !important;
+  background: transparent !important;
 }
 
 /* ══════════════════════════════════════════
@@ -665,7 +743,7 @@
 }
 .appt-date-input {
   width: 100%;
-  background: transparent;
+  background: transparent !important;
   border: none;
   outline: none;
   color: #fff !important;
@@ -922,7 +1000,7 @@
   font-size: 11px;
 }
 
-/* ── INPUT TEXT COLOR FIX – all inputs black text ── */
+/* ── INPUT TEXT COLOR – popup form inputs: black text on white bg ── */
 .appt-form-group input,
 .appt-form-full input,
 .appt-form-full textarea {
@@ -948,14 +1026,6 @@
 .appt-form-group input::placeholder,
 .appt-form-full textarea::placeholder {
   color: #888888 !important;
-}
-/* Also fix any generic inputs inside appt wrapper */
-.appt-single-page input[type="text"],
-.appt-single-page input[type="email"],
-.appt-single-page input[type="tel"],
-.appt-single-page textarea {
-  color: #111111 !important;
-  background: #ffffff !important;
 }
 
 .appt-popup-error {
