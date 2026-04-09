@@ -1,0 +1,276 @@
+/* ══════════════════════════════════════════
+   Appartali Booking – Admin Styles
+══════════════════════════════════════════ */
+
+:root {
+  --appt-gold:    #f5c842;
+  --appt-green:   #22c55e;
+  --appt-red:     #ef4444;
+  --appt-blue:    #3b82f6;
+  --appt-bg:      #1a1a2e;
+  --appt-card:    #16213e;
+  --appt-border:  #2a2a45;
+}
+
+.appt-admin-wrap {
+  max-width: 1400px;
+  padding: 20px;
+}
+.appt-admin-wrap h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e1e1e;
+  margin-bottom: 0;
+}
+.appt-total-badge {
+  display: inline-block;
+  background: #e8f4fe;
+  color: #0073aa;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* ── Filters ── */
+.appt-filters {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 18px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.appt-filters form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.appt-search-input {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+  min-width: 240px;
+  outline: none;
+}
+.appt-search-input:focus { border-color: #0073aa; box-shadow: 0 0 0 2px rgba(0,115,170,.15); }
+.appt-filter-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.appt-btn-filter {
+  background: #0073aa;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.appt-btn-filter:hover { background: #005d8c; }
+.appt-btn-reset {
+  background: #f0f0f0;
+  color: #555;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background .2s;
+}
+.appt-btn-reset:hover { background: #e0e0e0; }
+
+/* ── Table ── */
+.appt-bookings-table {
+  background: #fff;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+.appt-bookings-table thead th {
+  background: #f8f9fa;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: #666;
+  border-bottom: 1px solid #e0e0e0 !important;
+  padding: 12px 14px !important;
+  white-space: nowrap;
+}
+.appt-bookings-table tbody td {
+  padding: 12px 14px !important;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f0f0 !important;
+  font-size: 13px;
+  color: #333;
+}
+.appt-booking-row:hover td { background: #fafbff; }
+.appt-booking-row:last-child td { border-bottom: none !important; }
+
+.appt-status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+
+/* ── Action Buttons ── */
+.appt-action-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.appt-action-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.appt-btn-confirm  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+.appt-btn-confirm:hover  { background: #22c55e; color: #fff; }
+.appt-btn-pending  { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.appt-btn-pending:hover  { background: #f59e0b; color: #fff; }
+.appt-btn-cancel   { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+.appt-btn-cancel:hover   { background: #ef4444; color: #fff; }
+.appt-btn-view-details { background: #eff6ff; color: #1d4ed8; border: 1px solid #93c5fd; }
+.appt-btn-view-details:hover { background: #3b82f6; color: #fff; }
+
+/* ── Pagination ── */
+.appt-pagination {
+  display: flex;
+  gap: 6px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.appt-page-btn {
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #333;
+  transition: all .15s;
+}
+.appt-page-btn:hover, .appt-page-btn.active {
+  background: #0073aa;
+  color: #fff;
+  border-color: #0073aa;
+}
+
+/* ── Empty State ── */
+.appt-empty-state {
+  text-align: center;
+  background: #fff;
+  border: 2px dashed #e0e0e0;
+  border-radius: 12px;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+/* ══════════════════════════════════════════
+   Admin Modal (Booking Details)
+══════════════════════════════════════════ */
+.appt-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.appt-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(3px);
+}
+.appt-modal-content {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 32px;
+  width: 90%;
+  max-width: 520px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.appt-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.appt-modal-close:hover { background: #e0e0e0; }
+.appt-modal-content h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  color: #1e1e1e;
+}
+.appt-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+}
+.appt-detail-row:last-child { border-bottom: none; }
+.appt-detail-label { color: #888; font-weight: 500; min-width: 130px; }
+.appt-detail-value { color: #1e1e1e; font-weight: 600; text-align: right; max-width: 250px; word-break: break-word; }
+.appt-detail-total .appt-detail-value { color: #0073aa; font-size: 15px; }
+
+/* ── Toast ── */
+.appt-toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #1e1e1e;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 200000;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  border-left: 4px solid #22c55e;
+}
+.appt-toast.error { border-left-color: #ef4444; }

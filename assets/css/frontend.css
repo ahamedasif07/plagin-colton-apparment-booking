@@ -1,0 +1,769 @@
+/* ══════════════════════════════════════════
+   Appartali Booking – Frontend Styles
+   Dark theme matching reference design
+══════════════════════════════════════════ */
+
+:root {
+  --appt-bg:        #0a0a0a;
+  --appt-card:      #111111;
+  --appt-card2:     #1a1a1a;
+  --appt-border:    #2a2a2a;
+  --appt-text:      #e8e8e8;
+  --appt-muted:     #999999;
+  --appt-gold:      #f5c842;
+  --appt-gold-dim:  #f5c84222;
+  --appt-green:     #22c55e;
+  --appt-red:       #ef4444;
+  --appt-radius:    12px;
+  --appt-radius-sm: 8px;
+  --appt-shadow:    0 4px 24px rgba(0,0,0,.55);
+  --appt-transition: all .25s ease;
+}
+
+/* ── Explore Section ── */
+.appt-explore-section {
+  background: var(--appt-bg);
+  padding: 60px 24px 48px;
+  color: var(--appt-text);
+}
+
+.appt-explore-title {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 32px;
+  letter-spacing: -.5px;
+}
+
+/* ── Category Tabs ── */
+.appt-category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--appt-border);
+  padding-bottom: 16px;
+}
+
+.appt-tab-btn {
+  background: transparent;
+  border: 1px solid var(--appt-border);
+  color: var(--appt-muted);
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--appt-transition);
+}
+.appt-tab-btn:hover,
+.appt-tab-btn.active {
+  background: var(--appt-gold);
+  color: #111;
+  border-color: var(--appt-gold);
+  font-weight: 700;
+}
+
+/* ── Room Grid ── */
+.appt-rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+@media (max-width: 1200px) { .appt-rooms-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 860px)  { .appt-rooms-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 520px)  { .appt-rooms-grid { grid-template-columns: 1fr; } }
+
+/* ── Room Card ── */
+.appt-room-card {
+  display: block;
+  background: var(--appt-card);
+  border-radius: var(--appt-radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--appt-text);
+  transition: transform .22s ease, box-shadow .22s ease;
+  border: 1px solid var(--appt-border);
+}
+.appt-room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--appt-shadow);
+  border-color: #3a3a3a;
+}
+
+.appt-room-img-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 185px;
+}
+.appt-room-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+.appt-room-card:hover .appt-room-img {
+  transform: scale(1.06);
+}
+.appt-no-img {
+  width: 100%;
+  height: 100%;
+  background: #1e1e1e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--appt-muted);
+  font-size: 13px;
+}
+
+.appt-room-info {
+  padding: 12px 14px 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.appt-room-left { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.appt-room-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+
+.appt-room-location {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+.appt-room-host {
+  font-size: 12px;
+  color: var(--appt-muted);
+}
+.appt-room-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--appt-text);
+  margin-top: 4px;
+}
+.appt-room-rating {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.appt-star { color: var(--appt-gold); }
+.appt-room-id {
+  font-size: 11px;
+  color: var(--appt-muted);
+}
+
+/* ── Browse More ── */
+.appt-browse-more-wrap { text-align: center; }
+.appt-browse-btn {
+  display: inline-block;
+  padding: 11px 36px;
+  background: transparent;
+  border: 1px solid var(--appt-gold);
+  color: var(--appt-gold);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--appt-transition);
+}
+.appt-browse-btn:hover {
+  background: var(--appt-gold);
+  color: #111;
+}
+
+.appt-no-rooms {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--appt-muted);
+  padding: 40px;
+  font-size: 15px;
+}
+
+/* Loading skeleton */
+.appt-rooms-grid.loading .appt-room-card {
+  pointer-events: none;
+  opacity: .5;
+}
+
+/* ══════════════════════════════════════════
+   Single Apartment Page
+══════════════════════════════════════════ */
+
+.appt-single-body,
+.appt-single-page {
+  background: #0d0d0d;
+  color: var(--appt-text);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.appt-single-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* Breadcrumb */
+.appt-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.appt-breadcrumb a {
+  color: var(--appt-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.appt-breadcrumb-sub {
+  color: var(--appt-muted);
+}
+
+/* ── Layout ── */
+.appt-single-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 48px;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .appt-single-layout { grid-template-columns: 1fr; }
+  .appt-single-right { position: static !important; }
+}
+
+/* ── Images ── */
+.appt-main-image-wrap {
+  border-radius: var(--appt-radius);
+  overflow: hidden;
+  height: 380px;
+  background: #1a1a1a;
+  margin-bottom: 12px;
+}
+.appt-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+.appt-no-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--appt-muted);
+}
+.appt-thumb-gallery {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.appt-thumb {
+  width: 100px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: var(--appt-transition);
+  opacity: .7;
+}
+.appt-thumb:hover, .appt-thumb.active {
+  border-color: var(--appt-gold);
+  opacity: 1;
+}
+
+/* ── Room Title ── */
+.appt-room-title-block {
+  margin-bottom: 20px;
+}
+.appt-room-main-title {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 6px;
+}
+.appt-room-id-label {
+  font-size: 12px;
+  color: var(--appt-muted);
+  background: #1a1a1a;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--appt-border);
+}
+
+/* ── Guest Favorite ── */
+.appt-guest-fav-row { margin-bottom: 24px; }
+.appt-guest-fav-badge {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #161616;
+  border: 1px solid var(--appt-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.appt-gf-icon { font-size: 28px; }
+.appt-gf-text { flex: 1; }
+.appt-gf-title { font-size: 14px; font-weight: 700; color: #fff; display: block; }
+.appt-gf-sub { font-size: 11px; color: var(--appt-muted); margin-top: 3px; display: block; }
+.appt-gf-rating { text-align: right; }
+.appt-gf-num { font-size: 24px; font-weight: 800; color: #fff; display: block; margin-bottom: 4px; }
+.appt-star-filled { color: var(--appt-gold); font-size: 14px; }
+.appt-star-empty  { color: #444; font-size: 14px; }
+
+/* ── Host Intro ── */
+.appt-host-intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid var(--appt-border);
+  border-bottom: 1px solid var(--appt-border);
+  margin-bottom: 24px;
+}
+.appt-host-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--appt-gold);
+}
+.appt-host-stay-label { font-size: 15px; font-weight: 600; color: #fff; }
+.appt-superhost-badge {
+  display: inline-block;
+  font-size: 11px;
+  background: var(--appt-gold-dim);
+  color: var(--appt-gold);
+  border: 1px solid #f5c84255;
+  border-radius: 20px;
+  padding: 2px 10px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* ── Section styles ── */
+.appt-about-section,
+.appt-room-details-row,
+.appt-amenities-section,
+.appt-meet-host-section {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--appt-border);
+}
+.appt-about-section h3,
+.appt-room-details-row h3,
+.appt-amenities-section h3,
+.appt-meet-host-section h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 16px;
+}
+.appt-about-text { font-size: 14px; color: var(--appt-muted); line-height: 1.75; }
+
+/* Room details grid */
+.appt-room-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.appt-rd-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--appt-text);
+}
+.appt-rd-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* Amenities */
+.appt-amenities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.appt-amenity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--appt-text);
+  background: #141414;
+  border: 1px solid var(--appt-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.appt-amenity-icon { font-size: 16px; }
+
+/* Meet host card */
+.appt-meet-host-card {
+  background: #141414;
+  border: 1px solid var(--appt-border);
+  border-radius: var(--appt-radius);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 24px;
+}
+@media (max-width: 600px) { .appt-meet-host-card { grid-template-columns: 1fr; } }
+.appt-mh-avatar-col { text-align: center; }
+.appt-mh-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--appt-gold);
+  margin-bottom: 10px;
+}
+.appt-mh-name { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.appt-mh-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.appt-mh-stats span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+.appt-mh-stats small { font-size: 11px; color: var(--appt-muted); font-weight: 400; }
+.appt-mh-super-desc {
+  background: #1e1e1e;
+  border: 1px solid var(--appt-border);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--appt-muted);
+  line-height: 1.6;
+}
+.appt-mh-super-desc strong { color: #fff; }
+.appt-mh-detail-title { font-size: 13px; font-weight: 700; color: var(--appt-muted); text-transform: uppercase; letter-spacing: 1px; margin: 14px 0 8px; }
+.appt-mh-detail-row { display: flex; gap: 8px; font-size: 13px; color: var(--appt-text); margin-bottom: 6px; align-items: flex-start; }
+.appt-mh-dl { color: var(--appt-muted); min-width: 130px; }
+
+/* ══════════════════════════════════════════
+   Booking Widget (sticky right column)
+══════════════════════════════════════════ */
+
+.appt-single-right {
+  position: sticky;
+  top: 24px;
+}
+
+.appt-booking-widget {
+  background: #141414;
+  border: 1px solid var(--appt-border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--appt-shadow);
+}
+
+.appt-bw-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.appt-bw-amount {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+}
+.appt-bw-per { font-size: 14px; color: var(--appt-muted); }
+
+.appt-bw-dates {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e1e1e;
+  border: 1px solid var(--appt-border);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 14px;
+}
+.appt-bw-date-group {
+  flex: 1;
+  padding: 10px 12px;
+}
+.appt-bw-date-group label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--appt-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.appt-date-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color-scheme: dark;
+}
+.appt-bw-arrow { color: var(--appt-muted); font-size: 14px; flex-shrink: 0; }
+
+.appt-bw-avail-msg {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.appt-bw-avail-msg.available {
+  background: #22c55e18;
+  border: 1px solid #22c55e44;
+  color: #22c55e;
+}
+.appt-bw-avail-msg.unavailable {
+  background: #ef444418;
+  border: 1px solid #ef444444;
+  color: #ef4444;
+}
+
+.appt-reserve-btn {
+  width: 100%;
+  background: var(--appt-gold);
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--appt-transition);
+  letter-spacing: .3px;
+}
+.appt-reserve-btn:hover {
+  background: #f0bc30;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(245,200,66,.3);
+}
+.appt-reserve-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.appt-bw-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--appt-muted);
+  margin: 10px 0 16px;
+}
+
+.appt-bw-breakdown {
+  border-top: 1px solid var(--appt-border);
+  padding-top: 16px;
+  margin-top: 4px;
+}
+.appt-bw-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--appt-text);
+  padding: 6px 0;
+}
+.appt-bw-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  border-top: 1px solid var(--appt-border);
+  padding-top: 12px;
+  margin-top: 6px;
+}
+
+/* ══════════════════════════════════════════
+   Booking Popup
+══════════════════════════════════════════ */
+
+.appt-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+  animation: apptFadeIn .2s ease;
+}
+@keyframes apptFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.appt-popup-box {
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 18px;
+  padding: 32px;
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+  animation: apptSlideUp .25s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+@keyframes apptSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.appt-popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #222;
+  border: 1px solid #333;
+  color: #aaa;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--appt-transition);
+}
+.appt-popup-close:hover { background: #333; color: #fff; }
+
+.appt-popup-header {
+  margin-bottom: 20px;
+}
+.appt-popup-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 6px;
+}
+.appt-popup-header p {
+  font-size: 13px;
+  color: var(--appt-muted);
+  margin: 0;
+}
+
+.appt-popup-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2px;
+  background: #1e1e1e;
+  border: 1px solid var(--appt-border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.appt-ps-item {
+  padding: 12px 14px;
+  background: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.appt-ps-total { background: var(--appt-gold-dim); }
+.appt-ps-item span { font-size: 11px; color: var(--appt-muted); text-transform: uppercase; letter-spacing: .8px; }
+.appt-ps-item strong { font-size: 14px; color: #fff; font-weight: 700; }
+.appt-ps-total strong { color: var(--appt-gold); }
+
+.appt-popup-form { margin-bottom: 16px; }
+.appt-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (max-width: 480px) { .appt-form-row { grid-template-columns: 1fr; } }
+.appt-form-group { display: flex; flex-direction: column; gap: 6px; }
+.appt-form-full { width: 100%; margin-bottom: 14px; }
+.appt-form-group label,
+.appt-form-full label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--appt-muted);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+.appt-req { color: var(--appt-red); }
+.appt-opt { color: var(--appt-muted); font-weight: 400; text-transform: none; font-size: 11px; }
+.appt-form-group input,
+.appt-form-full input,
+.appt-form-full textarea {
+  background: #1e1e1e;
+  border: 1px solid var(--appt-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: var(--appt-transition);
+  resize: vertical;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+.appt-form-group input:focus,
+.appt-form-full input:focus,
+.appt-form-full textarea:focus {
+  border-color: var(--appt-gold);
+  box-shadow: 0 0 0 3px rgba(245,200,66,.12);
+}
+.appt-form-group input::placeholder,
+.appt-form-full textarea::placeholder { color: #555; }
+
+.appt-popup-error {
+  background: #ef444418;
+  border: 1px solid #ef444444;
+  color: #ef4444;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.appt-submit-booking-btn {
+  width: 100%;
+  background: var(--appt-gold);
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--appt-transition);
+}
+.appt-submit-booking-btn:hover:not(:disabled) {
+  background: #f0bc30;
+  box-shadow: 0 4px 20px rgba(245,200,66,.3);
+}
+.appt-submit-booking-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Success box */
+.appt-success-box { text-align: center; padding: 48px 32px; }
+.appt-success-icon { font-size: 56px; margin-bottom: 16px; }
+.appt-success-box h2 { font-size: 24px; font-weight: 800; color: #fff; margin: 0 0 12px; }
+.appt-success-box p { font-size: 14px; color: var(--appt-muted); line-height: 1.6; margin: 0 0 24px; }
+.appt-success-box strong { color: #fff; }
+
+/* Scrollbar */
+.appt-popup-box::-webkit-scrollbar { width: 4px; }
+.appt-popup-box::-webkit-scrollbar-track { background: transparent; }
+.appt-popup-box::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
