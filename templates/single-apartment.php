@@ -115,7 +115,6 @@ while (have_posts()) :
 
         <div class="appt-single-page">
 
-            <!-- ── HEADER (reuse theme or minimal) ── -->
             <div class="appt-single-inner">
 
                 <!-- Breadcrumb -->
@@ -130,7 +129,7 @@ while (have_posts()) :
                     <!-- LEFT: Images + Info -->
                     <div class="appt-single-left">
 
-                        <!-- Main Image -->
+                        <!-- Main Image (unchanged) -->
                         <div class="appt-main-image-wrap">
                             <?php if ($main_img): ?>
                                 <img src="<?= esc_url($main_img) ?>" alt="<?= esc_attr($title) ?>" class="appt-main-img"
@@ -140,14 +139,80 @@ while (have_posts()) :
                             <?php endif; ?>
                         </div>
 
-                        <!-- Thumbnail Gallery -->
+                        <!-- Thumbnail Gallery — same markup, only overflow:hidden → scroll added via wrapper -->
                         <?php if (! empty($thumb_imgs)): ?>
-                            <div class="appt-thumb-gallery">
-                                <?php foreach ($gallery_urls as $i => $u): ?>
-                                    <img src="<?= esc_url($u) ?>" alt="Gallery" class="appt-thumb <?= $i === 0 ? 'active' : '' ?>"
-                                        onclick="document.getElementById('apptMainImg').src=this.src;document.querySelectorAll('.appt-thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active');">
-                                <?php endforeach; ?>
+                            <div style="position:relative; margin-bottom:24px;">
+
+                                <!-- Prev arrow -->
+                                <button onclick="apptThumbScroll(-1)" style="position:absolute;left:-14px;top:50%;transform:translateY(-50%);z-index:9;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.15);color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:17px;line-height:1;padding:0;display:flex;align-items:center;justify-content:center;" aria-label="Prev">&#8249;</button>
+
+                                <!-- The existing .appt-thumb-gallery div — flex-wrap changed to nowrap + overflow hidden via inline -->
+                                <div class="appt-thumb-gallery" id="apptThumbGallery" style="flex-wrap:nowrap !important; overflow:hidden; scroll-behavior:smooth;">
+                                    <?php foreach ($gallery_urls as $i => $u): ?>
+                                        <img src="<?= esc_url($u) ?>" alt="Gallery"
+                                             class="appt-thumb <?= $i === 0 ? 'active' : '' ?>"
+                                             data-index="<?= $i ?>"
+                                             onclick="apptGoTo(<?= $i ?>);">
+                                    <?php endforeach; ?>
+                                </div>
+
+                                <!-- Next arrow -->
+                                <button onclick="apptThumbScroll(1)" style="position:absolute;right:-14px;top:50%;transform:translateY(-50%);z-index:9;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.15);color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:17px;line-height:1;padding:0;display:flex;align-items:center;justify-content:center;" aria-label="Next">&#8250;</button>
+
                             </div>
+
+                            <script>
+                            (function(){
+                                var urls    = <?= json_encode(array_values($gallery_urls)) ?>;
+                                var total   = urls.length;
+                                var current = 0;
+
+                                /* Change main image */
+                                window.apptGoTo = function(index) {
+                                    if (index < 0) index = total - 1;
+                                    if (index >= total) index = 0;
+                                    current = index;
+
+                                    var img = document.getElementById('apptMainImg');
+                                    if (img) {
+                                        img.style.opacity = '0.4';
+                                        setTimeout(function(){
+                                            img.src = urls[current];
+                                            img.style.transition = 'opacity 0.25s';
+                                            img.style.opacity = '1';
+                                        }, 120);
+                                    }
+
+                                    /* active thumb */
+                                    document.querySelectorAll('#apptThumbGallery .appt-thumb').forEach(function(t){
+                                        t.classList.remove('active');
+                                    });
+                                    var active = document.querySelector('#apptThumbGallery .appt-thumb[data-index="'+current+'"]');
+                                    if (active) {
+                                        active.classList.add('active');
+                                        var g = document.getElementById('apptThumbGallery');
+                                        g.scrollLeft = active.offsetLeft - g.offsetWidth/2 + active.offsetWidth/2;
+                                    }
+                                };
+
+                                /* Scroll thumbnail strip left / right */
+                                window.apptThumbScroll = function(dir) {
+                                    var g = document.getElementById('apptThumbGallery');
+                                    g.scrollLeft += dir * 220;
+                                };
+
+                                /* Swipe on main image */
+                                var wrap = document.querySelector('.appt-main-image-wrap');
+                                if (wrap) {
+                                    var sx = 0;
+                                    wrap.addEventListener('touchstart', function(e){ sx = e.changedTouches[0].screenX; }, {passive:true});
+                                    wrap.addEventListener('touchend',   function(e){
+                                        var dx = sx - e.changedTouches[0].screenX;
+                                        if (Math.abs(dx) > 40) apptGoTo(dx > 0 ? current+1 : current-1);
+                                    }, {passive:true});
+                                }
+                            })();
+                            </script>
                         <?php endif; ?>
 
                         <!-- Room Title -->
